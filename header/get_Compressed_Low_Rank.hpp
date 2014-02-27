@@ -19,7 +19,7 @@ using namespace Eigen;
 void get_Compressed_Low_Rank(MatrixXd X, MatrixXd Y, double tolerance, MatrixXd& U, VectorXd& S, MatrixXd& V, int& r);
 
 /*!
- Given a matrix in low-rank form obtains its SVD, i.e., XY^T = USV^T, where the matrices are stored in columnformat using double*.
+ Given a matrix in low-rank form obtains its SVD, i.e., XY^T = USV^T, where the matrices are stored in column format using double*.
  */
 void get_Compressed_Low_Rank(double* X, double* Y, int m, int p, int n, double tolerance, double*& U, double*& S, double*& V, int& r);
 

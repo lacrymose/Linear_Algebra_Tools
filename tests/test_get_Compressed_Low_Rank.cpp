@@ -1,5 +1,5 @@
 //
-//  test_SVD_Low_Rank.cpp
+//  test_get_Compressed_Low_Rank.cpp
 //  
 //
 //  Created by Sivaram Ambikasaran on 2/25/14.
