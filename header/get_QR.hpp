@@ -10,16 +10,20 @@
 #define __get_QR_hpp__
 
 #include <Eigen/Dense>
-using namespace Eigen;
+#include <cstdlib>
+#include <algorithm>
 
 /*!
- Obtains the QR decomposition as A=QR, where all the matrices are in Eigen MatrixXd format.
+ Obtains the QR decomposition as A=QR.
  */
-void get_QR(MatrixXd A, MatrixXd& Q, MatrixXd& R);
+void get_QR(Eigen::MatrixXd A, Eigen::MatrixXd& Q, Eigen::MatrixXd& R) {
+        int m           =       A.rows();
+        int n           =       A.cols();
+        int minmn       =       std::min(m,n);
 
-/*!
- Obtains the QR decomposition as A=QR, where all the matrices are in double format.
- */
-void get_QR(double* A, int m, int n, double*& Q, double*& R);
+        Eigen::HouseholderQR<Eigen::MatrixXd> qr(A);
+        Q = qr.householderQ()*(Eigen::MatrixXd::Identity(m,minmn));
+        R = qr.matrixQR().block(0,0,minmn,n).triangularView<Eigen::Upper>();
+}
 
 #endif /* defined(__get_QR_hpp__) */

@@ -1,7 +1,7 @@
 CC	=g++
 CFLAGS	=-c -Wall -O4 -ffast-math -ffinite-math-only -I ./../header/
 LDFLAGS	=
-SOURCES	= ./../tests/test_get_QR.cpp ./../src/get_QR.cpp
+SOURCES	= ./../tests/test_get_QR.cpp
 OBJECTS	=$(SOURCES:.cpp=.o)
 EXECUTABLE	=./../exec/get_QR
 

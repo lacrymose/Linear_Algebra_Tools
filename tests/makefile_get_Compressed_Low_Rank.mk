@@ -1,7 +1,7 @@
 CC	=g++
 CFLAGS	=-c -Wall -O4 -ffast-math -ffinite-math-only -I ./../header/
 LDFLAGS	=
-SOURCES	= ./../tests/test_get_Compressed_Low_Rank.cpp ./../src/get_Compressed_Low_Rank.cpp ./../src/get_QR.cpp ./../src/get_SVD.cpp
+SOURCES	= ./../tests/test_get_Compressed_Low_Rank.cpp
 OBJECTS	=$(SOURCES:.cpp=.o)
 EXECUTABLE	=./../exec/get_Compressed_Low_Rank
 

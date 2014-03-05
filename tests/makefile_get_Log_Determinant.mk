@@ -1,9 +1,9 @@
 CC	=g++
 CFLAGS	=-c -Wall -O4 -ffast-math -ffinite-math-only -I ./../header/
 LDFLAGS	=
-SOURCES	= ./../tests/test_get_SVD.cpp
+SOURCES	= ./../tests/test_get_Log_Determinant.cpp
 OBJECTS	=$(SOURCES:.cpp=.o)
-EXECUTABLE	=./../exec/get_SVD
+EXECUTABLE	=./../exec/get_Log_Determinant
 
 all: $(SOURCES) $(EXECUTABLE)
 

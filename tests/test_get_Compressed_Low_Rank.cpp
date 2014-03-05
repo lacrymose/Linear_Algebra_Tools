@@ -6,62 +6,35 @@
 //
 //
 
+#include "get_Compressed_Low_Rank.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
 #include <Eigen/Dense>
-#include "get_Compressed_Low_Rank.hpp"
-
-using namespace Eigen;
-
-using std::cout;
-using std::endl;
 
 int main(int argc, char* argv[]) {
+        srand(time(NULL));
         int m           =       atoi(argv[1]);    //      Number of rows.
         int n           =       atoi(argv[2]);    //      Number of columns.
         int p           =       atoi(argv[3]);    //      Rank of the matrix.
 
-        //      The matrix X*Y.
-        double* X       =       new double[m*p];
-        double* Y       =       new double[n*p];
+        Eigen::MatrixXd X       =       Eigen::MatrixXd::Random(m,p);
+        Eigen::MatrixXd Y       =       Eigen::MatrixXd::Random(p,n);
+        Eigen::MatrixXd Z       =       Eigen::MatrixXd::Random(p,p);
 
-        double RANDMAX  =       double(RAND_MAX);
+        double tolerance=       1e-12;
 
-        int count       =       0;
-        for (int i=0; i<m; ++i) {
-                for (int j=0; j<p; ++j) {
-                        X[count]        =       rand()/RANDMAX;
-                        ++count;
-                }
-        }
+        Eigen::MatrixXd U;
+        Eigen::VectorXd S;
+        Eigen::MatrixXd V;
 
-        count           =       0;
-        for (int i=0; i<n; ++i) {
-                for (int j=0; j<p; ++j) {
-                        Y[count]        =       rand()/RANDMAX;
-                        ++count;
-                }
-        }
+        int rank;
 
-        double tolerance=       1e-16;
+        get_Compressed_Low_Rank(X, Y, tolerance, U, S, V, rank);
 
-        //      X*Y     =       U*S*V' + e
-        double* U;
-        double* S;
-        double* V;
+        std::cout << (X*Y-U*S.asDiagonal()*V.transpose()).cwiseAbs().maxCoeff() << std::endl;
 
-        //      'r' is the rank.
-        int r;
+        get_Compressed_Low_Rank(X, Z, Y, tolerance, U, S, V, rank);
 
-        //      Obtains the compressed low-rank form, i.e., for a given tolerance outputs X*Y = U*S*V' + e
-        get_Compressed_Low_Rank(X, Y, m, p, n, tolerance, U, S, V, r);
-
-        MatrixXd X_E    =       MatrixXd::Random(m,p);
-        MatrixXd Y_E    =       MatrixXd::Random(p,n);
-        MatrixXd U_E, V_E;
-        VectorXd S_E;
-        get_Compressed_Low_Rank(X_E, Y_E, tolerance, U_E, S_E, V_E, r);
-        cout << "Error is: " << (X_E*Y_E - U_E*S_E.asDiagonal()*V_E.transpose()).norm() << endl;
-        cout << "Rank is: " << r << endl;
+        std::cout << (X*Z*Y-U*S.asDiagonal()*V.transpose()).cwiseAbs().maxCoeff() << std::endl;
 }

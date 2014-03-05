@@ -10,16 +10,20 @@
 #define __get_SVD_hpp__
 
 #include <Eigen/Dense>
-using namespace Eigen;
 
 /*!
- Obtains the SVD as A=USV', where all the matrices are in Eigen MatrixXd format.
+ Obtains the SVD decomposition as A=USV', where all the matrices are in Eigen MatrixXd format.
  */
-void get_SVD(MatrixXd A, double tolerance, MatrixXd& U, VectorXd& S, MatrixXd& V, int& rank);
-
-/*!
- Obtains the SVD decomposition as A=USV', where all the matrices are in double format.
- */
-void get_SVD(double* A, int m, int n, double tolerance, double*& U, double*& S, double*& V, int& rank);
+void get_SVD(const Eigen::MatrixXd A, const double tolerance, Eigen::MatrixXd& U, Eigen::VectorXd& S, Eigen::MatrixXd& V, int& rank) {
+        Eigen::JacobiSVD<Eigen::MatrixXd> svd(A, Eigen::ComputeThinU | Eigen::ComputeThinV);
+        rank    =       0;
+        S       =       svd.singularValues();
+        while (rank < S.size() && S(rank)>tolerance) {
+                ++rank;
+        }
+        U       =       svd.matrixU().block(0,0,A.rows(),rank);
+        V       =       svd.matrixV().block(0,0,A.cols(),rank);
+        S       =       S.segment(0,rank);
+}
 
 #endif /* defined(__get_SVD_hpp__) */
