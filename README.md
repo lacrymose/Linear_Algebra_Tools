@@ -1,7 +1,7 @@
-Linear_Algebra_Tools
+Linear Algebra Tools
 ====================
 
-Collection of useful linear algebra tools. You need to have [Eigen](http://eigen.tuxfamily.org/) on your machine. This is essentially a convenient wrapper around Eigen. Everything is in the header file and each has one specific function. As a matter of policy, any header file should not have more than '3' functions. Beyond that it might be good idea to have some of the functions in a new header file.
+Collection of useful linear algebra tools. You need to have [Eigen](http://eigen.tuxfamily.org/) on your machine. Everything is in the header file and each has one specific function. As a matter of policy, any header file should not have more than '3' functions. Beyond that it might be good idea to have some of the functions in a new header file.
 
 Here are some basic functionalities of this tool:
 
